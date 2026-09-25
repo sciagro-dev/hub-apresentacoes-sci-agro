@@ -1,0 +1,5 @@
+# Endereço temporário, enquanto não há login. Nada aqui deve entrar em buscador:
+# nem a integração (material interno), nem a comercial — que no futuro vai viver
+# em sci-agro.com e não deve competir com ela no Google a partir de um github.io.
+User-agent: *
+Disallow: /

@@ -1,0 +1,192 @@
+APRESENTAÇÕES SCI-AGRO — PASTA PRONTA PARA O SITE
+=================================================
+Gerado em 25/09/2026 · revisão 4
+
+
+O QUE FAZER
+-----------
+Suba esta pasta inteira para o site, de preferência em:
+
+    https://www.sci-agro.com/apresentacoes/
+
+Os endereços ficam assim:
+
+    /apresentacoes/                                → o índice
+    /apresentacoes/apresentacao-comercial.html     → comercial (abre em português)
+    /apresentacoes/apresentacao-comercial.html?idioma=en   → comercial em inglês
+    /apresentacoes/integracao.html                 → integração (uso interno)
+
+Não precisa de banco, PHP, plugin nem build. São arquivos estáticos: funciona
+em qualquer hospedagem, inclusive WordPress (basta colocar a pasta na raiz,
+fora de /wp-content/) e Netlify, Vercel ou S3.
+
+Se a pasta for para OUTRO endereço, abra os três .html e troque
+"https://www.sci-agro.com/apresentacoes" pelo endereço real — são 4 linhas em
+cada arquivo, marcadas com um comentário logo acima. Isso só afeta a imagem que
+aparece quando alguém compartilha o link; o resto funciona de qualquer jeito.
+
+
+O QUE TEM NA PASTA
+------------------
+    index.html                    índice (214 KB)
+    apresentacao-comercial.html   comercial, PT e EN no mesmo arquivo (514 KB)
+    integracao.html               integração/onboarding, só português (493 KB)
+    img/                          as fotos grandes, o favicon e as prévias de link
+    arquivos/                     3 PDF e 2 PowerPoint
+    robots.txt                    pede aos buscadores para não indexar (ver adiante)
+    LEIA-ME.txt                   este arquivo
+
+São 74 arquivos no total. Não existe mais pasta "fontes/": as fontes e as
+imagens pequenas (ícones, logos das operadoras, as miniaturas do índice) foram
+para dentro do próprio HTML, e por isso os três .html engordaram. Foi de
+propósito — o GitHub só aceita 100 arquivos por vez no envio pelo navegador, e
+a pasta tinha 117. As fotos grandes continuam soltas em img/, que é o que
+importa para a página abrir rápido.
+
+ATENÇÃO — A INTEGRAÇÃO É INTERNA
+--------------------------------
+integracao.html traz regras internas, nomes das operadoras de benefício e a
+equipe de brigadistas. Está no mesmo endereço público do índice, ou seja: quem
+tiver o link do hub chega nela. Foi a opção escolhida por ser a mais prática
+enquanto não há login.
+
+Duas travas já estão postas, e é importante entender o que elas fazem:
+
+  - robots.txt e a linha <meta name="robots" content="noindex, nofollow"> nos
+    três .html pedem ao Google e aos outros buscadores que não indexem nada
+    daqui. Isso evita que a integração apareça numa busca por "SCI-AGRO" e
+    evita também que um endereço provisório concorra no Google com o site
+    oficial de vocês.
+  - Isso é um pedido, não uma tranca. Quem tiver o link continua abrindo a
+    página normalmente, e o pedido vale para buscadores que o respeitam.
+
+Ou seja: hoje o material está discreto, não protegido. A trava de verdade vem
+com o login (ver a seção sobre o GitHub adiante).
+
+Quando o hub for para o site oficial, tire a linha "noindex" das três páginas
+e apague o robots.txt — a comercial deve, sim, aparecer no Google. Nesse mesmo
+momento vale mover a integração e o PDF dela para uma pasta separada, fora do
+índice. É uma mudança de dez minutos; é só pedir.
+
+
+SE FOR PARA O GITHUB PAGES (endereço provisório)
+------------------------------------------------
+Passo a passo, pelo navegador:
+
+  1. github.com → New repository. Nome: apresentacoes-sci-agro.
+     Marque "Public" — o Pages precisa disso no plano gratuito.
+  2. No repositório vazio: "uploading an existing file".
+  3. Arraste TODOS os itens de dentro desta pasta de uma vez: os três .html,
+     robots.txt, LEIA-ME.txt e as pastas img/ e arquivos/. Não arraste a pasta
+     de fora — arraste o conteúdo dela.
+  4. "Commit changes".
+  5. Settings → Pages → Source: "Deploy from a branch" → branch "main",
+     pasta "/ (root)" → Save. Em um ou dois minutos o endereço aparece ali.
+
+O endereço fica parecido com:
+    https://SEU-USUARIO.github.io/apresentacoes-sci-agro/
+
+SOBRE O LOGIN (a fase 1)
+------------------------
+O GitHub Pages não tem senha. Não é questão de configurar: o recurso não
+existe no produto, e deixar o repositório privado não muda nada — o site
+publicado continua aberto a quem tiver o link. Senha em Pages só no plano
+GitHub Enterprise Cloud.
+
+Então, quando chegar a hora do login, o caminho é outro. Três opções, da mais
+simples para a mais completa:
+
+  - Cloudflare Pages + Cloudflare Access: mesma pasta, mesmo arrastar-e-soltar,
+    e o Access põe uma tela de login na frente. Dá para liberar por domínio de
+    e-mail (qualquer @sci-agro.com entra) ou por lista de pessoas. Gratuito até
+    50 pessoas. É o que eu recomendaria.
+  - Uma pasta protegida no próprio site da SCI-AGRO, com a senha que a
+    hospedagem de vocês já oferece.
+  - Netlify, que tem proteção por senha nos planos pagos.
+
+Em qualquer uma delas a pasta é esta mesma, sem mudar nada. É só avisar quando
+for a hora.
+
+OS DOIS IDIOMAS NO MESMO ARQUIVO
+--------------------------------
+apresentacao-comercial.html traz os 23 slides em português E os 23 em inglês.
+O botão PT/EN no canto inferior esquerdo troca na hora, sem recarregar e sem
+perder o slide em que a pessoa está — dá para trocar no meio de uma reunião.
+
+As fotos são as mesmas nos dois idiomas, então o arquivo não dobra de tamanho:
+são 156 KB de HTML no total. Para mandar um link que já abra em inglês, use
+"?idioma=en" no fim do endereço.
+
+Peso real na rede: o servidor entrega os arquivos compactados, então o índice
+chega com ~150 KB e a comercial com ~300 KB — a capa aparece na hora. As fotos
+grandes (cerca de 1,4 MB no total) entram depois, enquanto a pessoa lê o
+primeiro slide, e ficam em cache para as outras páginas.
+
+
+COMO SE USA O DECK
+------------------
+    setas ← →     passar slide (também funciona rolar o mouse e arrastar no celular)
+    Esc           abre a visão geral com os 23 slides
+    F             tela cheia
+    PT / EN       botão no canto inferior esquerdo troca o idioma
+                  (só na comercial; a integração é só em português)
+    #7 no fim     abre direto no slide 7
+
+O último merece atenção: o endereço na barra acompanha a navegação. Se você
+estiver no slide de contato e copiar o endereço, quem receber abre exatamente
+ali. Serve para mandar só o escopo de estudos, só a tabela, só o contato.
+
+
+SE FOR EMBUTIR NUMA PÁGINA EXISTENTE
+------------------------------------
+Dá para deixar o deck dentro de uma página de vocês, com o menu do site em
+volta. Cole isto onde ele deve aparecer:
+
+    <div style="position:relative;width:100%;aspect-ratio:16/9;
+                border-radius:12px;overflow:hidden;background:#062A43">
+      <iframe src="/apresentacoes/apresentacao-comercial.html"
+              title="Apresentação Comercial SCI-AGRO"
+              loading="lazy" allowfullscreen
+              style="position:absolute;inset:0;width:100%;height:100%;border:0">
+      </iframe>
+    </div>
+
+Duas coisas mudam quando o deck fica dentro de um iframe:
+
+  - O atalho de tela cheia precisa do allowfullscreen acima (já está no trecho).
+  - O "#7" deixa de valer: o endereço da página de fora não chega ao quadro de
+    dentro. Para abrir num slide específico, aponte o próprio src:
+    src="/apresentacoes/apresentacao-comercial.html#7"
+
+Por isso a página inteira, no endereço próprio, continua sendo a melhor forma de
+divulgar o link.
+
+
+PARA ACRESCENTAR UMA APRESENTAÇÃO DEPOIS
+----------------------------------------
+O caminho é sempre o mesmo, e é melhor me mandar o material do que montar à mão:
+de um PowerPoint saem o HTML bilíngue, o PDF de cada idioma e a capa, tudo já no
+padrão desta pasta. Eu devolvo a pasta atualizada e vocês substituem.
+
+Se for mexer à mão: coloque o novo .html aqui e duplique, no index.html, o bloco
+<div class="peca"> com os ids trocados, ajustando também o objeto "D" no script
+do fim da página, que é onde ficam título, descrição e os endereços de cada
+idioma.
+
+
+DETALHES QUE PODEM SER ÚTEIS
+----------------------------
+  - Tudo é servido do domínio de vocês. Nenhuma fonte ou script vem de fora,
+    então não há requisição para Google Fonts nem CDN — ponto a favor em
+    privacidade e em velocidade.
+  - O índice é sempre claro, independente do tema do sistema de quem abre.
+  - As animações respeitam "reduzir movimento" do sistema operacional.
+  - O deck mede a taxa de quadros nos primeiros segundos; se o computador não
+    acompanha (projetor espelhado, Chrome sem aceleração por hardware), ele
+    desliga sozinho o movimento de fundo em vez de travar no meio da reunião.
+  - Os PowerPoint em arquivos/ já têm a fonte Sora incorporada: abrem com o
+    layout certo mesmo em máquina que não tem a fonte instalada.
+  - Os PDF saíram da própria apresentação HTML, não do PowerPoint: são as mesmas
+    23 páginas que você vê na tela, com o texto selecionável e pesquisável.
+  - O índice lembra o último idioma escolhido, por navegador. Quem sempre abre em
+    inglês encontra a página já em inglês na próxima visita.
