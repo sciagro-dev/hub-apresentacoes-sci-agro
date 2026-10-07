@@ -1,6 +1,6 @@
 APRESENTAÇÕES SCI-AGRO — PASTA PRONTA PARA O SITE
 =================================================
-Gerado em 25/09/2026 · revisão 4
+Gerado em 25/09/2026 · revisão 5 (saneantes acrescentada em 07/10/2026)
 
 
 O QUE FAZER
@@ -14,13 +14,15 @@ Os endereços ficam assim:
     /apresentacoes/                                → o índice
     /apresentacoes/apresentacao-comercial.html     → comercial (abre em português)
     /apresentacoes/apresentacao-comercial.html?idioma=en   → comercial em inglês
+    /apresentacoes/apresentacao-saneantes.html     → saneantes (abre em português)
+    /apresentacoes/apresentacao-saneantes.html?idioma=en   → saneantes em inglês
     /apresentacoes/integracao.html                 → integração (uso interno)
 
 Não precisa de banco, PHP, plugin nem build. São arquivos estáticos: funciona
 em qualquer hospedagem, inclusive WordPress (basta colocar a pasta na raiz,
 fora de /wp-content/) e Netlify, Vercel ou S3.
 
-Se a pasta for para OUTRO endereço, abra os três .html e troque
+Se a pasta for para OUTRO endereço, abra os .html e troque
 "https://www.sci-agro.com/apresentacoes" pelo endereço real — são 4 linhas em
 cada arquivo, marcadas com um comentário logo acima. Isso só afeta a imagem que
 aparece quando alguém compartilha o link; o resto funciona de qualquer jeito.
@@ -28,15 +30,21 @@ aparece quando alguém compartilha o link; o resto funciona de qualquer jeito.
 
 O QUE TEM NA PASTA
 ------------------
-    index.html                    índice (214 KB)
+    index.html                    índice (218 KB)
     apresentacao-comercial.html   comercial, PT e EN no mesmo arquivo (514 KB)
+    apresentacao-saneantes.html   saneantes, PT e EN no mesmo arquivo (4,0 MB)
     integracao.html               integração/onboarding, só português (493 KB)
     img/                          as fotos grandes, o favicon e as prévias de link
-    arquivos/                     3 PDF e 2 PowerPoint
+    arquivos/                     5 PDF e 3 PowerPoint
     robots.txt                    pede aos buscadores para não indexar (ver adiante)
     LEIA-ME.txt                   este arquivo
 
-São 74 arquivos no total. Não existe mais pasta "fontes/": as fontes e as
+São 80 arquivos no total.
+
+Saneantes é diferente das outras duas: o arquivo é autossuficiente, com as fotos
+e as fontes todas dentro dele. Por isso tem 4,0 MB em vez de 500 KB — e por isso
+abre com dois cliques de qualquer lugar, inclusive de um pen drive ou de um
+e-mail, sem precisar da pasta img/ junto. As outras duas dependem da pasta. Não existe mais pasta "fontes/": as fontes e as
 imagens pequenas (ícones, logos das operadoras, as miniaturas do índice) foram
 para dentro do próprio HTML, e por isso os três .html engordaram. Foi de
 propósito — o GitHub só aceita 100 arquivos por vez no envio pelo navegador, e
@@ -169,9 +177,12 @@ de um PowerPoint saem o HTML bilíngue, o PDF de cada idioma e a capa, tudo já 
 padrão desta pasta. Eu devolvo a pasta atualizada e vocês substituem.
 
 Se for mexer à mão: coloque o novo .html aqui e duplique, no index.html, o bloco
-<div class="peca"> com os ids trocados, ajustando também o objeto "D" no script
-do fim da página, que é onde ficam título, descrição e os endereços de cada
-idioma.
+<div class="peca" data-peca="nome">, trocando o "nome". Depois acrescente uma
+entrada com esse mesmo nome no objeto "PECAS", no script do fim da página, que é
+onde ficam título, descrição, capa e os endereços de cada idioma. O script já
+atende quantas peças houver — não há mais id para renomear. Peça que não tenha
+PowerPoint num dos idiomas é só pôr ppt:null, que o botão some sozinho naquele
+idioma em vez de virar link morto.
 
 
 DETALHES QUE PODEM SER ÚTEIS
@@ -187,6 +198,12 @@ DETALHES QUE PODEM SER ÚTEIS
   - Os PowerPoint em arquivos/ já têm a fonte Sora incorporada: abrem com o
     layout certo mesmo em máquina que não tem a fonte instalada.
   - Os PDF saíram da própria apresentação HTML, não do PowerPoint: são as mesmas
-    23 páginas que você vê na tela, com o texto selecionável e pesquisável.
+    páginas que você vê na tela, com o texto selecionável e pesquisável.
+  - O PowerPoint de saneantes é a exceção: cada slide entrou como uma imagem em
+    alta, porque a arte do deck não existe como objeto nativo do PowerPoint. Ele
+    apresenta e imprime igual ao que se vê, mas o texto não é editável clicando
+    em cima — está, inteiro, nas notas do apresentador de cada slide.
+  - Saneantes ainda não tem PowerPoint em inglês. No índice, o botão some quando
+    se escolhe English, em vez de apontar para um arquivo que não existe.
   - O índice lembra o último idioma escolhido, por navegador. Quem sempre abre em
     inglês encontra a página já em inglês na próxima visita.

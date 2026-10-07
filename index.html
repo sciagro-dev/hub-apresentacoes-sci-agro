@@ -213,40 +213,78 @@ main{padding-bottom:var(--s8)}
 
 <main class="pad">
   <section class="sec">
-    <div class="sec__hd"><h2>Comercial</h2><span>1 apresentação · 2 idiomas</span></div>
+    <div class="sec__hd"><h2>Comercial</h2><span>2 apresentações · 2 idiomas</span></div>
     <p class="sec__sub">Material para enviar ao cliente e apresentar em reunião. Os dois idiomas estão
        no mesmo arquivo: dá para trocar no meio da apresentação, sem recarregar nem perder o slide.</p>
 
-    <div class="peca">
-      <a class="capa" id="capa" href="apresentacao-comercial.html">
-        <img id="capaImg" src="img/capa-pt.webp" width="640" height="360" decoding="async"
+    <div class="peca" data-peca="comercial">
+      <a class="capa js-capa" href="apresentacao-comercial.html">
+        <img class="js-capaImg" src="img/capa-pt.webp" width="640" height="360" decoding="async"
              alt="Capa: Apresentação SCI-AGRO — Seu produto. Nossa responsabilidade.">
         <span class="chip">23 slides</span>
       </a>
 
       <div>
-        <div class="toggle" id="toggle" role="group" aria-label="Idioma da apresentação">
+        <div class="toggle js-toggle" role="group" aria-label="Idioma da apresentação">
           <button type="button" data-l="pt" aria-pressed="true">Português</button>
           <button type="button" data-l="en" aria-pressed="false">English</button>
         </div>
 
-        <h3 id="titulo">Apresentação Comercial 2026</h3>
-        <p class="peca__desc" id="desc">Quem somos, estrutura e os oito estudos: 5-batch,
+        <h3 class="js-titulo">Apresentação Comercial 2026</h3>
+        <p class="peca__desc js-desc">Quem somos, estrutura e os oito estudos: 5-batch,
           físico-químicos, ecotoxicologia, genotoxicidade, toxicologia in vitro e in vivo,
           microbiologia e resíduos de pesticidas.</p>
-        <ul class="meta"><li id="mIdioma">Português</li><li>23 slides</li><li>HTML · PDF · PPTX</li></ul>
+        <ul class="meta"><li class="js-idioma">Português</li><li>23 slides</li><li>HTML · PDF · PPTX</li></ul>
 
         <div class="acoes">
-          <a class="btn btn--forte" id="aAbrir" href="apresentacao-comercial.html">
+          <a class="btn btn--forte js-abrir" href="apresentacao-comercial.html">
             Abrir apresentação
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
           </a>
-          <a class="btn btn--leve" id="aPdf" href="arquivos/Apresentacao-Comercial-2026-SCI-AGRO.pdf" download>
+          <a class="btn btn--leve js-pdf" href="arquivos/Apresentacao-Comercial-2026-SCI-AGRO.pdf" download>
             PDF <b>4,1 MB</b>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>
           </a>
-          <a class="btn btn--leve" id="aPpt" href="arquivos/Apresentacao-Comercial-2026-SCI-AGRO.pptx" download>
+          <a class="btn btn--leve js-ppt" href="arquivos/Apresentacao-Comercial-2026-SCI-AGRO.pptx" download>
             PowerPoint <b>3,4 MB</b>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="peca" data-peca="saneantes">
+      <a class="capa js-capa" href="apresentacao-saneantes.html">
+        <img class="js-capaImg" src="img/capa-sa-pt.webp" width="640" height="360"
+             loading="lazy" decoding="async"
+             alt="Capa: Apresentação SCI-AGRO Saneantes — Seu produto. Nossa responsabilidade.">
+        <span class="chip">14 slides</span>
+      </a>
+
+      <div>
+        <div class="toggle js-toggle" role="group" aria-label="Idioma da apresentação">
+          <button type="button" data-l="pt" aria-pressed="true">Português</button>
+          <button type="button" data-l="en" aria-pressed="false">English</button>
+        </div>
+
+        <h3 class="js-titulo">Apresentação Comercial Saneantes 2026</h3>
+        <p class="peca__desc js-desc">Escopo para saneantes: microbiologia, físico-químicos,
+          entomologia, toxicologia in vitro e in vivo, genotoxicidade, ecotoxicologia e resíduos
+          de pesticidas — com a estrutura de Charqueada e o acompanhamento de projeto.</p>
+        <ul class="meta"><li class="js-idioma">Português</li><li>14 slides</li><li>HTML · PDF · PPTX</li></ul>
+
+        <div class="acoes">
+          <a class="btn btn--forte js-abrir" href="apresentacao-saneantes.html">
+            Abrir apresentação
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--leve js-pdf" href="arquivos/Apresentacao-Comercial-Saneantes-2026-SCI-AGRO.pdf" download>
+            PDF <b>2,9 MB</b>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>
+          </a>
+          <a class="btn btn--leve js-ppt" href="arquivos/Apresentacao-Comercial-Saneantes-2026-SCI-AGRO.pptx" download>
+            PowerPoint <b>7,0 MB</b>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>
           </a>
         </div>
@@ -305,61 +343,114 @@ main{padding-bottom:var(--s8)}
       <a href="https://www.sci-agro.com">sci-agro.com</a>
       <a href="mailto:sales@sci-agro.com">sales@sci-agro.com</a>
     </span>
-    <span>Atualizado em setembro de 2026</span>
+    <span>Atualizado em outubro de 2026</span>
   </div>
 </footer>
 
 <script>
 (function(){
   "use strict";
-  var D = {
-    pt: { titulo:"Apresentação Comercial 2026",
-          desc:"Quem somos, estrutura e os oito estudos: 5-batch, físico-químicos, ecotoxicologia, "
-             + "genotoxicidade, toxicologia in vitro e in vivo, microbiologia e resíduos de pesticidas.",
-          idioma:"Português", capa:"img/capa-pt.webp",
-          alt:"Capa: Apresentação SCI-AGRO — Seu produto. Nossa responsabilidade.",
-          abrir:"apresentacao-comercial.html",
-          pdf:"arquivos/Apresentacao-Comercial-2026-SCI-AGRO.pdf", pdfKB:"4,1 MB",
-          ppt:"arquivos/Apresentacao-Comercial-2026-SCI-AGRO.pptx", pptKB:"3,4 MB" },
-    en: { titulo:"Commercial Presentation 2026",
-          desc:"A mesma apresentação em inglês, para cliente e auditoria de fora. Mesmo conteúdo, "
-             + "mesmas fotos e a mesma sequência — muda só o idioma.",
-          idioma:"English", capa:"img/capa-en.webp",
-          alt:"Cover: SCI-AGRO Presentation — Your product. Our responsibility.",
-          abrir:"apresentacao-comercial.html?idioma=en",
-          pdf:"arquivos/Commercial-Presentation-2026-SCI-AGRO-EN.pdf", pdfKB:"4,1 MB",
-          ppt:"arquivos/Commercial-Presentation-2026-SCI-AGRO-EN.pptx", pptKB:"3,5 MB" }
-  };
-  var el = function(id){ return document.getElementById(id); };
-  var atual = "pt";
 
-  function aplica(l){
-    var d = D[l]; atual = l;
-    el("titulo").textContent = d.titulo;
-    el("desc").textContent   = d.desc;
-    el("mIdioma").textContent = d.idioma;
-    el("capaImg").src = d.capa;
-    el("capaImg").alt = d.alt;
-    el("capa").href   = d.abrir;
-    el("aAbrir").href = d.abrir;
-    el("aPdf").href   = d.pdf;  el("aPdf").querySelector("b").textContent = d.pdfKB;
-    el("aPpt").href   = d.ppt;  el("aPpt").querySelector("b").textContent = d.pptKB;
-    el("toggle").querySelectorAll("button").forEach(function(b){
-      b.setAttribute("aria-pressed", b.dataset.l === l ? "true" : "false");
-    });
-    try { localStorage.setItem("sciagro-idioma", l); } catch (e) {}
+  /* Uma entrada por peça bilíngue. O script varre [data-peca] e só mexe no que
+     existir dentro de cada peça — peça sem PPTX simplesmente esconde o botão. */
+  var PECAS = {
+    comercial: {
+      pt: { titulo:"Apresentação Comercial 2026",
+            desc:"Quem somos, estrutura e os oito estudos: 5-batch, físico-químicos, ecotoxicologia, "
+               + "genotoxicidade, toxicologia in vitro e in vivo, microbiologia e resíduos de pesticidas.",
+            idioma:"Português", capa:"img/capa-pt.webp",
+            alt:"Capa: Apresentação SCI-AGRO — Seu produto. Nossa responsabilidade.",
+            abrir:"apresentacao-comercial.html",
+            pdf:"arquivos/Apresentacao-Comercial-2026-SCI-AGRO.pdf", pdfKB:"4,1 MB",
+            ppt:"arquivos/Apresentacao-Comercial-2026-SCI-AGRO.pptx", pptKB:"3,4 MB" },
+      en: { titulo:"Commercial Presentation 2026",
+            desc:"A mesma apresentação em inglês, para cliente e auditoria de fora. Mesmo conteúdo, "
+               + "mesmas fotos e a mesma sequência — muda só o idioma.",
+            idioma:"English", capa:"img/capa-en.webp",
+            alt:"Cover: SCI-AGRO Presentation — Your product. Our responsibility.",
+            abrir:"apresentacao-comercial.html?idioma=en",
+            pdf:"arquivos/Commercial-Presentation-2026-SCI-AGRO-EN.pdf", pdfKB:"4,1 MB",
+            ppt:"arquivos/Commercial-Presentation-2026-SCI-AGRO-EN.pptx", pptKB:"3,5 MB" }
+    },
+    saneantes: {
+      pt: { titulo:"Apresentação Comercial Saneantes 2026",
+            desc:"Escopo para saneantes: microbiologia, físico-químicos, entomologia, toxicologia "
+               + "in vitro e in vivo, genotoxicidade, ecotoxicologia e resíduos de pesticidas — com a "
+               + "estrutura de Charqueada e o acompanhamento de projeto.",
+            idioma:"Português", capa:"img/capa-sa-pt.webp",
+            alt:"Capa: Apresentação SCI-AGRO Saneantes — Seu produto. Nossa responsabilidade.",
+            abrir:"apresentacao-saneantes.html",
+            pdf:"arquivos/Apresentacao-Comercial-Saneantes-2026-SCI-AGRO.pdf", pdfKB:"2,9 MB",
+            ppt:"arquivos/Apresentacao-Comercial-Saneantes-2026-SCI-AGRO.pptx", pptKB:"7,0 MB" },
+      en: { titulo:"Commercial Presentation Sanitizers 2026",
+            desc:"A mesma apresentação de saneantes em inglês. Mesmo conteúdo, mesmas fotos e a "
+               + "mesma sequência — muda só o idioma.",
+            idioma:"English", capa:"img/capa-sa-en.webp",
+            alt:"Cover: SCI-AGRO Sanitizers Presentation — Your product. Our responsibility.",
+            abrir:"apresentacao-saneantes.html?idioma=en",
+            pdf:"arquivos/Commercial-Presentation-Sanitizers-2026-SCI-AGRO-EN.pdf", pdfKB:"2,9 MB",
+            ppt:null }
+    }
+  };
+
+  var CHAVE = "sciagro-idioma";
+
+  function texto(raiz, sel, valor){
+    var e = raiz.querySelector(sel);
+    if (e && valor != null) e.textContent = valor;
   }
 
-  el("toggle").addEventListener("click", function(e){
-    var b = e.target.closest("button[data-l]");
-    if (b && b.dataset.l !== atual) aplica(b.dataset.l);
+  function aplica(peca, l){
+    var d = (PECAS[peca.dataset.peca] || {})[l];
+    if (!d) return;
+    peca.dataset.idioma = l;
+
+    texto(peca, ".js-titulo", d.titulo);
+    texto(peca, ".js-desc",   d.desc);
+    texto(peca, ".js-idioma", d.idioma);
+
+    var img = peca.querySelector(".js-capaImg");
+    if (img) { img.src = d.capa; img.alt = d.alt; }
+
+    ["js-capa", "js-abrir"].forEach(function(c){
+      var e = peca.querySelector("." + c);
+      if (e) e.href = d.abrir;
+    });
+
+    [[".js-pdf", d.pdf, d.pdfKB], [".js-ppt", d.ppt, d.pptKB]].forEach(function(par){
+      var e = peca.querySelector(par[0]);
+      if (!e) return;
+      /* Sem arquivo naquele idioma o botão sai da página — deixar um link morto
+         seria pior do que não oferecer. */
+      if (!par[1]) { e.hidden = true; return; }
+      e.hidden = false;
+      e.href = par[1];
+      var b = e.querySelector("b");
+      if (b) b.textContent = par[2];
+    });
+
+    peca.querySelectorAll(".js-toggle button").forEach(function(b){
+      b.setAttribute("aria-pressed", b.dataset.l === l ? "true" : "false");
+    });
+  }
+
+  var pecas = document.querySelectorAll("[data-peca]");
+
+  pecas.forEach(function(peca){
+    var t = peca.querySelector(".js-toggle");
+    if (!t) return;
+    t.addEventListener("click", function(e){
+      var b = e.target.closest("button[data-l]");
+      if (!b || b.dataset.l === peca.dataset.idioma) return;
+      aplica(peca, b.dataset.l);
+      try { localStorage.setItem(CHAVE, b.dataset.l); } catch (err) {}
+    });
   });
 
   /* lembra a escolha de quem já esteve aqui; se o navegador bloquear, segue em português */
-  try {
-    var salvo = localStorage.getItem("sciagro-idioma");
-    if (salvo === "en") aplica("en");
-  } catch (e) {}
+  var salvo = "pt";
+  try { if (localStorage.getItem(CHAVE) === "en") salvo = "en"; } catch (e) {}
+  pecas.forEach(function(peca){ aplica(peca, salvo); });
 })();
 </script>
 
