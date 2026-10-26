@@ -1,6 +1,6 @@
 APRESENTAÇÕES SCI-AGRO — PASTA PRONTA PARA O SITE
 =================================================
-Gerado em 25/09/2026 · revisão 5 (saneantes acrescentada em 07/10/2026)
+Gerado em 25/09/2026 · revisão 6 (modo apresentador nas três apresentações, 26/10/2026)
 
 
 O QUE FAZER
@@ -31,9 +31,9 @@ aparece quando alguém compartilha o link; o resto funciona de qualquer jeito.
 O QUE TEM NA PASTA
 ------------------
     index.html                    índice (218 KB)
-    apresentacao-comercial.html   comercial, PT e EN no mesmo arquivo (514 KB)
+    apresentacao-comercial.html   comercial, PT e EN no mesmo arquivo (560 KB)
     apresentacao-saneantes.html   saneantes, PT e EN no mesmo arquivo (4,0 MB)
-    integracao.html               integração/onboarding, só português (493 KB)
+    integracao.html               integração/onboarding, só português (531 KB)
     img/                          as fotos grandes, o favicon e as prévias de link
     arquivos/                     5 PDF e 3 PowerPoint
     robots.txt                    pede aos buscadores para não indexar (ver adiante)
@@ -139,10 +139,40 @@ COMO SE USA O DECK
     PT / EN       botão no canto inferior esquerdo troca o idioma
                   (só na comercial; a integração é só em português)
     #7 no fim     abre direto no slide 7
+    P             abre o modo apresentador (ver a seção abaixo)
+    L             liga e desliga o apontador laser
+    B             tela preta para o público (aperte de novo para voltar)
 
 O último merece atenção: o endereço na barra acompanha a navegação. Se você
 estiver no slide de contato e copiar o endereço, quem receber abre exatamente
 ali. Serve para mandar só o escopo de estudos, só a tabela, só o contato.
+
+
+MODO APRESENTADOR
+-----------------
+As três apresentações têm modo apresentador, igual ao do PowerPoint, mas no
+navegador. Aperte P (ou o botão de tela com linhas, ao lado das setas) e abre
+uma segunda janela só para quem apresenta, com:
+
+  - o slide atual e o próximo;
+  - as notas em tópicos de cada slide — no idioma que estiver na tela;
+  - relógio e cronômetro (T pausa, "Zerar" recomeça);
+  - botões de laser, tela preta, visão geral (O) e, nas bilíngues, PT/EN.
+
+As duas janelas andam juntas: avançar, voltar, trocar o idioma, ligar o laser
+ou escurecer a tela, de qualquer uma das duas, vale para as duas.
+
+Como usar numa reunião:
+  - Projetor ou TV: arraste a janela dos SLIDES para a segunda tela e aperte F
+    nela (tela cheia). A janela do apresentador fica no notebook.
+  - Teams ou Meet: compartilhe só a JANELA dos slides, não a tela inteira.
+  - Se nada abrir ao apertar P, o navegador bloqueou a janela: libere pop-ups
+    para o endereço do hub e aperte de novo.
+  - Feito e conferido para Chrome e Edge.
+
+As notas são um rascunho de tópicos de fala tirados do próprio conteúdo de cada
+slide. Para mudar uma nota, é só pedir: elas ficam no fim do script de cada
+.html, num objeto NOTAS, um bloco por idioma e uma lista por slide.
 
 
 SE FOR EMBUTIR NUMA PÁGINA EXISTENTE

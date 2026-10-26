@@ -841,6 +841,128 @@ html[data-idioma="en"] .slide[data-lang="pt"]{display:none !important}
 .s3__blob{right:-380px; bottom:-420px; width:1060px; height:980px; opacity:.5}
 </style>
 
+<style>
+/* ===== modo-apresentador.css (kit) ===== */
+/* =====================================================================
+   Modo apresentador — estilos (laser, tela preta, janela do apresentador)
+   Extraído do hub de apresentações e generalizado.
+   Troque as cores e fontes nas variáveis abaixo para casar com a marca.
+   ===================================================================== */
+:root{
+  --pm-accent:#1B5FA8;          /* botões ligados (laser/tela preta ativos) */
+  --pm-ok:#7CB92E;              /* bolinha "conectado", marcadores das notas, foco */
+  --pm-bg:#0c0b10;              /* fundo da janela do apresentador */
+  --pm-panel:#15141b;           /* fundo da caixa de notas */
+  --pm-btn:#1e1c26;
+  --pm-btn-line:#2f2d39;
+  --pm-text:#e9e7e0;
+  --pm-mute:#8e8c83;
+  --pm-font-title:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --pm-font-body:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+/* ---------- laser e tela preta (valem nas duas janelas) ---------- */
+.pm-laser{position:absolute;left:0;top:0;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;
+  background:radial-gradient(circle,#ff4a3d 0 30%,rgba(255,40,30,.55) 45%,rgba(255,40,30,0) 72%);
+  box-shadow:0 0 22px 6px rgba(255,40,30,.45);z-index:90;pointer-events:none;display:none}
+.pm-laser.show{display:block}
+.pm-lz{cursor:none}
+.pm-blk{position:absolute;inset:0;background:#000;z-index:80;display:none}
+.pm-blk.show{display:block}
+.pm-blk span{display:none}
+
+/* ---------- janela do apresentador ---------- */
+body.pm{overflow:hidden;background:var(--pm-bg);color:var(--pm-text);font-family:var(--pm-font-body)}
+/* esconda aqui os controles do deck que não fazem sentido na janela do apresentador */
+body.pm .pm-esconder{display:none!important}
+.pmx{position:fixed;inset:0;display:grid;grid-template-columns:minmax(0,1.62fr) minmax(320px,1fr);
+  grid-template-rows:auto minmax(0,1fr) auto;gap:16px;padding:16px 18px;z-index:70}
+.pmx-top{grid-column:1/-1;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.pmx-ttl{font-family:var(--pm-font-title);font-weight:600;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:#a5a39b;margin-right:auto}
+.pmx-ttl b{color:#fff;font-weight:600}
+.pmx-con{font-size:13px;color:#a5a39b;display:flex;align-items:center;gap:8px}
+.pmx-con i{width:9px;height:9px;border-radius:50%;background:#d9534f;display:block}
+.pmx-con.ok i{background:var(--pm-ok)}
+.pmx-clock{font-family:var(--pm-font-title);font-size:17px;color:#a5a39b;font-variant-numeric:tabular-nums}
+.pmx-timer{display:flex;align-items:center;gap:8px;background:#17161e;border:1px solid #2a2833;border-radius:10px;padding:6px 8px 6px 14px}
+.pmx-timer .tv{font-family:var(--pm-font-title);font-weight:700;font-size:26px;color:#fff;font-variant-numeric:tabular-nums;min-width:118px}
+.pmx-timer.paused .tv{color:var(--pm-mute)}
+.pmx button{all:unset;cursor:pointer;font-family:var(--pm-font-body);font-size:14px;color:var(--pm-text);background:var(--pm-btn);
+  border:1px solid var(--pm-btn-line);border-radius:8px;padding:8px 13px;line-height:1;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.pmx button:hover{background:#2a2833;color:#fff}
+.pmx button:focus-visible{outline:2px solid var(--pm-ok);outline-offset:2px}
+.pmx button.on{background:var(--pm-accent);border-color:var(--pm-accent);color:#fff}
+.pmx button.big{font-size:16px;padding:12px 22px}
+.pmx kbd{font-family:var(--pm-font-title);font-size:11px;background:rgba(255,255,255,.1);border-radius:4px;padding:2px 6px;color:#cfcdc6}
+.pmx-cur{position:relative;min-height:0;display:flex;flex-direction:column;gap:8px}
+.pmx-lab{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--pm-mute);font-weight:600;display:flex;gap:10px;align-items:center}
+.pmx-lab b{color:var(--pm-text);font-weight:600;letter-spacing:.06em}
+.pmx-box{position:relative;flex:1;min-height:0;border-radius:8px;overflow:hidden;background:#000}
+.pmx-box>.pm-moldura{position:absolute;inset:0;background:#000}
+body.pm .pm-blk{background:rgba(0,0,0,.82)}
+body.pm .pm-blk span{display:flex;position:absolute;inset:0;align-items:center;justify-content:center;
+  font-family:var(--pm-font-title);font-size:64px;color:#fff;letter-spacing:.06em}
+.pmx-side{display:flex;flex-direction:column;gap:14px;min-height:0}
+.pmx-next{display:flex;flex-direction:column;gap:8px}
+.pmx-nf{position:relative;width:100%;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:#000}
+.pmx-nf>.pm-clone{transform-origin:0 0;position:absolute;left:0;top:0}
+.pm-clone,.pm-clone *{animation:none!important;transition:none!important}
+.pmx-end{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--pm-mute);font-size:15px}
+.pmx-notes{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.pmx-nb{flex:1;min-height:0;overflow:auto;background:var(--pm-panel);border:1px solid #24222c;border-radius:8px;padding:16px 20px 16px 18px}
+.pmx-nb ul{margin:0;padding:0 0 0 1.1em}
+.pmx-nb li{font-size:var(--nfs,21px);line-height:1.45;color:#ecebe6;margin:0 0 .55em}
+.pmx-nb li::marker{color:var(--pm-ok)}
+.pmx-nb .none{color:var(--pm-mute);font-size:15px}
+.pmx-fs{margin-left:auto;display:flex;gap:6px}
+.pmx-fs button{padding:4px 9px;font-size:12px}
+.pmx-bot{grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pmx-bot .ix{font-family:var(--pm-font-title);font-weight:700;font-size:20px;color:#fff;min-width:92px;text-align:center;font-variant-numeric:tabular-nums}
+.pmx-bot .sp{flex:1}
+.pmx-help{font-size:12.5px;color:var(--pm-mute)}
+.pmx-tip{position:fixed;left:50%;top:70px;transform:translateX(-50%);z-index:95;max-width:640px;background:#1b1a22;
+  border:1px solid #34323d;border-radius:12px;padding:18px 22px;font-size:14.5px;line-height:1.55;color:#d8d6ce;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.pmx-tip b{color:#fff}
+.pmx-tip ol{margin:8px 0 12px 1.2em;padding:0}
+@media (max-width:900px){
+  .pmx{grid-template-columns:1fr;grid-template-rows:auto minmax(220px,1fr) auto auto;overflow:auto}
+}
+
+/* ============================================================
+   MODO APRESENTADOR — cores e fontes da marca, e o encaixe no motor
+   ============================================================ */
+:root{
+  --pm-accent:#0054A6; --pm-ok:#8CC63F;
+  --pm-bg:#02121D; --pm-panel:#062A43; --pm-btn:#08324F; --pm-btn-line:#0E3A5A;
+  --pm-text:#EEF3F7; --pm-mute:#8FA6B8;
+  --pm-font-title:"Figtree","Segoe UI",system-ui,sans-serif;
+  --pm-font-body:"Figtree","Segoe UI",system-ui,sans-serif;
+}
+/* botões da barra (laser e apresentador), no mesmo desenho das setas */
+.nav button.pm-ic svg{width:16px; height:16px}
+.nav button.pm-ic.on{background:var(--lime); border-color:var(--lime); color:var(--navy-900)}
+.nav .pm-sep{width:1px; height:20px; background:rgba(255,255,255,.16); margin:0 2px}
+/* no celular não há segunda tela: os dois botões saem para não brigar com a trilha */
+@media (max-width:700px){ .nav .pm-ic, .nav .pm-sep{display:none} }
+/* tela preta: some também a navegação, senão as setas ficam acesas no escuro */
+body:not(.pm):has(.pm-blk.show) .rail,
+body:not(.pm):has(.pm-blk.show) .nav,
+body:not(.pm):has(.pm-blk.show) .lang,
+body:not(.pm):has(.pm-blk.show) .hint{visibility:hidden}
+/* janela do apresentador */
+body.pm .index{z-index:96}
+body.pm .stage{border-radius:6px; box-shadow:none}
+body.pm .viewport{background:#000; perspective:none}
+.pmx-timer .tv,.pmx-bot .ix,.pmx-clock{font-family:"IBM Plex Mono",ui-monospace,monospace; font-weight:600}
+.pmx-ttl{font-family:"IBM Plex Mono",ui-monospace,monospace; letter-spacing:.14em}
+.pmx-langs{display:inline-flex; gap:4px}
+.pmx-langs button{padding:8px 11px !important}
+.pmx-tip{background:#08324F; border-color:#0E3A5A; font-family:"Figtree","Segoe UI",system-ui,sans-serif}
+.pmx-tip button{all:unset; cursor:pointer; background:#8CC63F; color:#062A43; font-weight:600;
+  font-size:14px; padding:8px 18px; border-radius:8px}
+.pmx-tip button:focus-visible{outline:2px solid #fff; outline-offset:2px}
+@media print{ .pm-laser,.pm-blk,.pmx,.pmx-tip{display:none !important} }
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -1397,22 +1519,25 @@ html[data-idioma="en"] .slide[data-lang="pt"]{display:none !important}
 </div>
 </div>
 
-<div class="rail" id="rail" role="tablist" aria-label="Navegação de slides"></div>
+<div class="rail pm-esconder" id="rail" role="tablist" aria-label="Navegação de slides"></div>
 
-<div class="nav">
+<div class="nav pm-esconder">
   <button id="prev" aria-label="Slide anterior"><svg><use href="#i-arrowL"/></svg></button>
   <button class="counter" id="idxBtn" aria-haspopup="dialog" aria-expanded="false" title="Índice de slides (Esc)">
     <b id="cur">01</b> / <span id="tot">23</span>
   </button>
   <button id="next" aria-label="Próximo slide"><svg><use href="#i-arrowR"/></svg></button>
+  <span class="pm-sep" aria-hidden="true"></span>
+  <button id="pmBLaser" class="pm-ic" type="button" aria-label="Apontador laser (L)" title="Apontador laser (L)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="7.6" opacity=".45"/><path d="M12 1.8v2.4M12 19.8v2.4M1.8 12h2.4M19.8 12h2.4" opacity=".7"/></svg></button>
+  <button id="pmBPres" class="pm-ic" type="button" aria-label="Modo apresentador (P)" title="Modo apresentador (P)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="3.6" width="18.8" height="12.4" rx="2"/><path d="M8 20.4h8M12 16v4.4"/><path d="M6.4 8h6.2M6.4 11.4h4" opacity=".7"/><rect x="14.6" y="7.2" width="3.6" height="5" rx=".8" opacity=".7"/></svg></button>
 </div>
 
-<div class="lang" id="lang" role="group" aria-label="Idioma / Language">
+<div class="lang pm-esconder" id="lang" role="group" aria-label="Idioma / Language">
   <button type="button" data-l="pt" aria-pressed="true">PT</button>
   <button type="button" data-l="en" aria-pressed="false">EN</button>
 </div>
 
-<div class="hint" id="hint">← → navegar · esc índice · f tela cheia</div>
+<div class="hint pm-esconder" id="hint">← → navegar · esc índice · f tela cheia · p apresentador</div>
 
 <div class="index" id="index" role="dialog" aria-modal="true" aria-label="Índice de slides" hidden>
   <div class="index__inner">
@@ -1420,6 +1545,403 @@ html[data-idioma="en"] .slide[data-lang="pt"]{display:none !important}
     <div class="index__grid" id="indexGrid"></div>
   </div>
 </div>
+<script>
+/* ===== modo-apresentador.js (kit) ===== */
+/* =====================================================================
+   Modo apresentador — versão portátil
+   Extraído do hub de apresentações e generalizado para qualquer deck HTML.
+
+   O que faz:
+   - Abre uma 2ª janela (apresentador) com slide atual, próximo slide,
+     notas em tópicos, relógio e cronômetro.
+   - As duas janelas andam juntas (BroadcastChannel + postMessage).
+   - Apontador laser (L), tela preta (B ou .), passador (PageUp/PageDown, F5).
+   - Interface em português ou inglês, conforme <html lang>.
+
+   Como usar (resumo — o guia tem o passo a passo):
+     <link rel="stylesheet" href="modo-apresentador.css">
+     <\script src="modo-apresentador.js"><\/script>
+     <\script>
+       var pm = ModoApresentador.iniciar({
+         palco:   document.getElementById('stage'), // elemento com os slides
+         slides:  '.s',                             // seletor de cada slide
+         largura: 1920, altura: 1080,               // tamanho "de desenho" do slide
+         irPara:  function(n){ meuDeck.go(n); },    // mostra o slide n (começa em 0)
+         atual:   function(){ return meuDeck.cur; },
+         notas:   [ ['tópico', 'tópico'], ['...'] ] // uma lista por slide
+       });
+       // e, dentro do seu deck, sempre que o slide mudar:
+       pm.slideMudou(n);
+     <\/script>
+   ===================================================================== */
+(function(global){
+  "use strict";
+
+  var TEXTOS = {
+    pt: {
+      blackScreen:"Tela preta", laser:"Laser", laserTitle:"Apontador laser (L)",
+      presTitle:"Modo apresentador: notas, próximo slide e cronômetro (P)", presBtn:"Modo apresentador",
+      popupBlocked:"O navegador bloqueou a janela do apresentador. Libere pop-ups para este site e tente de novo.",
+      presenterPrefix:"Apresentador", topTitle:"Modo apresentador",
+      searching:"Procurando a janela dos slides…",
+      openAudTitle:"Abrir a janela que vai para o projetor ou para a transmissão", openAud:"Abrir janela dos slides",
+      pauseTitle:"Pausar / continuar (T)", pause:"Pausar", resume:"Continuar",
+      resetTitle:"Zerar cronômetro", reset:"Zerar", helpTitle:"Como usar",
+      curSlide:"Slide atual", next:"Próximo", notes:"Notas",
+      fontDown:"Diminuir letra", fontUp:"Aumentar letra",
+      prev:"← Anterior", nextBtn:"Próximo →",
+      laserBtnTitle:"Apontador laser: passe o mouse sobre o slide atual (L)",
+      blkTitle:"Escurece a tela do público (B)", blkBtn:"Tela preta",
+      ovTitle:"Ver todos os slides (O)", ovBtn:"Visão geral",
+      help:"← → ou passador para navegar · T pausa o cronômetro",
+      end:"Fim da apresentação", noNotes:"Sem notas para este slide.",
+      conn:"Janela dos slides conectada", notConn:"Janela dos slides não conectada",
+      helpHead:"Como apresentar",
+      h1:"Com projetor ou TV: arraste a <b>janela dos slides</b> para a segunda tela e aperte <b>F</b> nela (tela cheia). Esta janela fica no notebook.",
+      h2:"Em Teams ou Meet: compartilhe só a <b>janela</b> dos slides, não a tela inteira.",
+      h3:"Navegue por aqui, pelo passador ou pelas setas. As duas janelas andam juntas.",
+      h4:"<b>L</b> liga o laser: passe o mouse sobre o slide atual. <b>B</b> escurece a tela do público.",
+      ok:"Entendi", param:"apresentador"
+    },
+    en: {
+      blackScreen:"Black screen", laser:"Laser", laserTitle:"Laser pointer (L)",
+      presTitle:"Presenter mode: notes, next slide and timer (P)", presBtn:"Presenter mode",
+      popupBlocked:"The browser blocked the presenter window. Allow pop-ups for this site and try again.",
+      presenterPrefix:"Presenter", topTitle:"Presenter mode",
+      searching:"Looking for the slides window…",
+      openAudTitle:"Open the window that goes to the projector or the broadcast", openAud:"Open slides window",
+      pauseTitle:"Pause / resume (T)", pause:"Pause", resume:"Resume",
+      resetTitle:"Reset timer", reset:"Reset", helpTitle:"How to use",
+      curSlide:"Current slide", next:"Next", notes:"Notes",
+      fontDown:"Smaller text", fontUp:"Larger text",
+      prev:"← Previous", nextBtn:"Next →",
+      laserBtnTitle:"Laser pointer: hover over the current slide (L)",
+      blkTitle:"Darkens the audience screen (B)", blkBtn:"Black screen",
+      ovTitle:"See all slides (O)", ovBtn:"Overview",
+      help:"← → or clicker to navigate · T pauses the timer",
+      end:"End of presentation", noNotes:"No notes for this slide.",
+      conn:"Slides window connected", notConn:"Slides window not connected",
+      helpHead:"How to present",
+      h1:"With a projector or TV: drag the <b>slides window</b> to the second screen and press <b>F</b> on it (full screen). This window stays on the laptop.",
+      h2:"On Teams or Meet: share only the slides <b>window</b>, not the whole screen.",
+      h3:"Navigate here, with the clicker or the arrow keys. Both windows move together.",
+      h4:"<b>L</b> turns on the laser: hover over the current slide. <b>B</b> darkens the audience screen.",
+      ok:"Got it", param:"presenter"
+    }
+  };
+
+  function iniciar(cfg){
+    cfg = cfg || {};
+    var stage = typeof cfg.palco === 'string' ? document.querySelector(cfg.palco) : cfg.palco;
+    if (!stage) throw new Error('ModoApresentador: informe "palco" (o elemento que contém os slides).');
+    var W = cfg.largura || 1920, H = cfg.altura || 1080;
+    /* "slides" pode ser um seletor ou uma função que devolve a lista atual —
+       num deck bilíngue a lista muda quando o idioma muda. */
+    function lista(){
+      if (typeof cfg.slides === 'function') return cfg.slides();
+      return Array.prototype.slice.call(stage.querySelectorAll(cfg.slides || ':scope > section'));
+    }
+    var irPara = cfg.irPara, atual = cfg.atual;
+    if (typeof irPara !== 'function' || typeof atual !== 'function')
+      throw new Error('ModoApresentador: "irPara(n)" e "atual()" são obrigatórios.');
+    var NOTES = cfg.notas || global.__notes || [];       // lista por slide, ou função(i)
+    function notasDe(i){ return typeof NOTES === 'function' ? NOTES(i) : NOTES[i]; }
+    var classeAtiva = cfg.classeAtiva || 'on';          // classe que o deck põe no slide visível
+    var limparAnim = cfg.limparAnimacoes || '';          // seletor de elementos que entram animados
+    var rotulo = cfg.rotulo || function(i){ var s = lista()[i]; return (s && (s.getAttribute('data-label') || s.getAttribute('aria-label'))) || ''; };
+    var moldura = cfg.moldura || stage.parentNode;       // caixa que envolve o palco
+    var ajustar = cfg.ajustar || function(){             // escala o palco para caber na moldura
+      var w = moldura.clientWidth || global.innerWidth, h = moldura.clientHeight || global.innerHeight;
+      var s = Math.min(w/W, h/H);
+      stage.style.transform = 'scale(' + s + ')';
+    };
+    var visaoGeral = cfg.visaoGeral || null, telaCheia = cfg.telaCheia || padraoTelaCheia;
+
+    var LANG = cfg.idioma || (((document.documentElement.lang || 'pt').slice(0,2) === 'en') ? 'en' : 'pt');
+    var T = TEXTOS[LANG] || TEXTOS.pt;
+    if (cfg.textos) for (var k in cfg.textos) T[k] = cfg.textos[k];
+
+    var PFX = cfg.prefixo || 'deck';                     // prefixo das chaves de armazenamento/janela
+    /* aceita os dois nomes: a janela pode ter sido aberta com o deck em outro idioma */
+    var IS_P = new RegExp('[?&](' + TEXTOS.pt.param + '|' + TEXTOS.en.param + ')\\b').test(location.search);
+    var KEY = PFX + ':' + location.pathname.replace(/[?#].*$/,'');
+    function pad(n){ return (n<10?'0':'')+n; }
+    function $(id){ return document.getElementById(id); }
+
+    function padraoTelaCheia(){
+      try {
+        var r = document.fullscreenElement ? document.exitFullscreen()
+          : (document.documentElement.requestFullscreen && document.documentElement.requestFullscreen());
+        if (r && r.catch) r.catch(function(){});
+      } catch(e){}
+    }
+
+    /* ---------- comunicação entre janelas ---------- */
+    var peer = null;
+    try { if (global.opener && !global.opener.closed) peer = global.opener; } catch(e){}
+    var bc = null;
+    try { bc = new BroadcastChannel(KEY); } catch(e){}
+    var seen = {}, remote = false, lastPong = 0;
+    function send(m){
+      m.id = Math.random().toString(36).slice(2); m.k = KEY; m.from = IS_P ? 'p' : 'a';
+      seen[m.id] = 1;
+      try { if (peer && !peer.closed) peer.postMessage(m, '*'); } catch(e){}
+      try { if (bc) bc.postMessage(m); } catch(e){}
+    }
+    function recv(m, src){
+      if (!m || m.k !== KEY || !m.id || seen[m.id]) return;
+      if (m.from === (IS_P ? 'p' : 'a')) return;      // só conversa com o outro papel
+      seen[m.id] = 1;
+      if (src && !peer) peer = src;
+      handle(m);
+    }
+    global.addEventListener('message', function(e){ recv(e.data, e.source); });
+    if (bc) bc.onmessage = function(e){ recv(e.data, null); };
+
+    function slideMudou(n){
+      if (!remote) send({t:'go', n:n});
+      if (IS_P) renderP(n);
+    }
+    function goRemote(n){ remote = true; try { irPara(n); } finally { remote = false; } if (IS_P) renderP(n); }
+
+    /* ---------- laser e tela preta ---------- */
+    var laser = document.createElement('div'); laser.className = 'pm-laser'; stage.appendChild(laser);
+    var blk = document.createElement('div'); blk.className = 'pm-blk'; blk.innerHTML = '<span>' + T.blackScreen + '</span>';
+    moldura.appendChild(blk);
+    var laserOn = false, blkOn = false, lastSent = 0;
+
+    function setLaser(on, fromRemote){
+      laserOn = on;
+      stage.classList.toggle('pm-lz', on);
+      if (!on) laser.classList.remove('show');
+      var b = $('pLaser'); if (b) b.classList.toggle('on', on);
+      var b2 = $('pmBLaser'); if (b2) b2.classList.toggle('on', on);
+      if (!fromRemote) send({t:'laser', on:on});
+    }
+    function setBlk(on, fromRemote){
+      blkOn = on; blk.classList.toggle('show', on);
+      var b = $('pBlk'); if (b) b.classList.toggle('on', on);
+      if (!fromRemote) send({t:'blk', on:on});
+    }
+    function placeLaser(x, y){
+      laser.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      laser.classList.add('show');
+    }
+    stage.addEventListener('mousemove', function(e){
+      if (!laserOn) return;
+      var r = stage.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width * W, y = (e.clientY - r.top) / r.height * H;
+      placeLaser(x, y);
+      var t = Date.now();
+      if (t - lastSent > 16) { lastSent = t; send({t:'lp', x:Math.round(x), y:Math.round(y)}); }
+    });
+    stage.addEventListener('mouseleave', function(){
+      if (!laserOn) return; laser.classList.remove('show'); send({t:'lh'});
+    });
+
+    function handle(m){
+      if (m.t === 'go') goRemote(m.n);
+      else if (m.t === 'laser') setLaser(m.on, true);
+      else if (m.t === 'lp') { if (laserOn) placeLaser(m.x, m.y); }
+      else if (m.t === 'lh') laser.classList.remove('show');
+      else if (m.t === 'blk') setBlk(m.on, true);
+      else if (m.t === 'hello' && !IS_P) {
+        if (cfg.aoConectar) cfg.aoConectar();            // ex.: o deck manda o idioma antes do slide
+        send({t:'go', n:atual()}); send({t:'blk', on:blkOn}); send({t:'laser', on:laserOn});
+      }
+      else if (m.t === 'ping' && !IS_P) send({t:'pong'});
+      else if (m.t !== 'pong' && cfg.aoMensagem) cfg.aoMensagem(m);   // mensagens do próprio deck
+      if (IS_P && m.t !== 'ping') lastPong = Date.now();
+    }
+
+    /* ---------- abrir janelas ---------- */
+    /* mantém os outros parâmetros do endereço (ex.: ?idioma=en) e tira só o do apresentador */
+    function urlCom(extra){
+      var u = location.href.replace(/#.*$/, ''), i = u.indexOf('?');
+      var base = i < 0 ? u : u.slice(0, i), q = i < 0 ? [] : u.slice(i+1).split('&');
+      q = q.filter(function(p){ var k = p.split('=')[0]; return p && k !== TEXTOS.pt.param && k !== TEXTOS.en.param; });
+      if (extra) q.push(extra);
+      return base + (q.length ? '?' + q.join('&') : '');
+    }
+    function openPresenter(){
+      var w = null;
+      try { w = global.open(urlCom(T.param) + '#' + (atual()+1), PFX + '-apresentador',
+                           'width=1280,height=780,menubar=no,toolbar=no,location=no'); } catch(e){}
+      if (w) { peer = w; try { w.focus(); } catch(e){} }
+      else alert(T.popupBlocked);
+    }
+    function openAudience(){
+      var w = null;
+      try { w = global.open(urlCom(null) + '#' + (atual()+1), PFX + '-slides', 'width=1100,height=640'); } catch(e){}
+      if (w) peer = w;
+    }
+
+    /* ---------- teclado (passador incluso) ---------- */
+    document.addEventListener('keydown', function(e){
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      var t = e.target; if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      var k = e.key;
+      if (k === 'l' || k === 'L') { e.preventDefault(); setLaser(!laserOn); }
+      else if (k === 'b' || k === 'B' || k === '.') { e.preventDefault(); setBlk(!blkOn); }
+      else if ((k === 'p' || k === 'P') && !IS_P) { e.preventDefault(); openPresenter(); }
+      else if (k === 'F5') { e.preventDefault(); if (!IS_P) telaCheia(); }
+      else if (IS_P && (k === 't' || k === 'T')) { e.preventDefault(); toggleTimer(); }
+    });
+
+    var api = { slideMudou:slideMudou, abrirApresentador:openPresenter, laser:function(on){ setLaser(on===undefined?!laserOn:on); },
+                telaPreta:function(on){ setBlk(on===undefined?!blkOn:on); }, ehApresentador:IS_P,
+                enviar:function(m){ send(m); },               // o deck manda as próprias mensagens (ex.: idioma)
+                redesenhar:function(){} };
+
+    /* ---------- janela normal: botões opcionais na barra do deck ---------- */
+    if (!IS_P) {
+      var barra = typeof cfg.barra === 'string' ? document.querySelector(cfg.barra) : cfg.barra;
+      if (barra) {
+        var bL = document.createElement('button'); bL.id = 'pmBLaser'; bL.title = T.laserTitle; bL.textContent = T.laser;
+        bL.type = 'button'; bL.onclick = function(){ setLaser(!laserOn); };
+        var bP = document.createElement('button'); bP.id = 'pmBPres'; bP.title = T.presTitle; bP.type = 'button';
+        bP.textContent = T.presBtn; bP.onclick = openPresenter;
+        barra.appendChild(bL); barra.appendChild(bP);
+      }
+      return api;
+    }
+
+    /* ================= JANELA DO APRESENTADOR ================= */
+    document.title = T.presenterPrefix + ' · ' + document.title;
+    document.body.classList.add('pm');
+    var ttl = cfg.titulo || (document.title.split('·').pop() || '').trim();
+    var shell = document.createElement('div'); shell.className = 'pmx';
+    shell.innerHTML =
+      '<div class="pmx-top">' +
+        '<div class="pmx-ttl">' + T.topTitle + ' · <b></b></div>' +
+        '<div class="pmx-con" id="pCon"><i></i><span>' + T.searching + '</span> <button id="pOpenA" title="' + T.openAudTitle + '">' + T.openAud + '</button></div>' +
+        '<div class="pmx-clock" id="pClock">--:--</div>' +
+        '<div class="pmx-timer" id="pTimer"><span class="tv" id="pTv">00:00:00</span>' +
+          '<button id="pTp" title="' + T.pauseTitle + '">' + T.pause + '</button><button id="pTr" title="' + T.resetTitle + '">' + T.reset + '</button></div>' +
+        '<button id="pHelp" title="' + T.helpTitle + '">?</button>' +
+      '</div>' +
+      '<div class="pmx-cur"><div class="pmx-lab">' + T.curSlide + ' <b id="pLab"></b></div><div class="pmx-box" id="pBox"></div></div>' +
+      '<div class="pmx-side">' +
+        '<div class="pmx-next"><div class="pmx-lab">' + T.next + ' <b id="pNlab"></b></div><div class="pmx-nf" id="pNf"></div></div>' +
+        '<div class="pmx-notes"><div class="pmx-lab">' + T.notes + '<span class="pmx-fs"><button id="pFm" title="' + T.fontDown + '">A−</button><button id="pFp" title="' + T.fontUp + '">A+</button></span></div>' +
+          '<div class="pmx-nb" id="pNotes"></div></div>' +
+      '</div>' +
+      '<div class="pmx-bot">' +
+        '<button class="big" id="pPrev">' + T.prev + '</button><span class="ix" id="pIx"></span><button class="big" id="pNext">' + T.nextBtn + '</button>' +
+        '<button id="pLaser" title="' + T.laserBtnTitle + '">' + T.laser + ' <kbd>L</kbd></button>' +
+        '<button id="pBlk" title="' + T.blkTitle + '">' + T.blkBtn + ' <kbd>B</kbd></button>' +
+        (visaoGeral ? '<button id="pOv" title="' + T.ovTitle + '">' + T.ovBtn + ' <kbd>O</kbd></button>' : '') +
+        '<span class="sp"></span><span class="pmx-help">' + T.help + '</span>' +
+      '</div>';
+    shell.querySelector('.pmx-ttl b').textContent = ttl;
+    document.body.appendChild(shell);
+
+    /* o palco do deck é movido para dentro da caixa "slide atual" */
+    moldura.classList.add('pm-moldura');
+    $('pBox').appendChild(moldura);
+    if (global.ResizeObserver) new ResizeObserver(function(){ ajustar(); }).observe($('pBox'));
+    ajustar();
+
+    $('pPrev').onclick = function(){ irPara(atual()-1); };
+    $('pNext').onclick = function(){ irPara(atual()+1); };
+    $('pLaser').onclick = function(){ setLaser(!laserOn); };
+    $('pBlk').onclick = function(){ setBlk(!blkOn); };
+    if (visaoGeral) $('pOv').onclick = function(){ visaoGeral(); };
+    $('pOpenA').onclick = openAudience;
+
+    /* tamanho da letra das notas (lembrado no navegador) */
+    var nfs = 21;
+    try { nfs = parseInt(localStorage.getItem(PFX + '-notes-fs'), 10) || 21; } catch(e){}
+    function applyFs(){ $('pNotes').style.setProperty('--nfs', nfs + 'px'); try { localStorage.setItem(PFX + '-notes-fs', nfs); } catch(e){} }
+    $('pFm').onclick = function(){ nfs = Math.max(14, nfs-2); applyFs(); };
+    $('pFp').onclick = function(){ nfs = Math.min(40, nfs+2); applyFs(); };
+    applyFs();
+
+    /* próximo slide (cópia estática) + notas */
+    function staticClone(s){
+      var cl = s.cloneNode(true);
+      cl.removeAttribute('id');
+      cl.classList.add(classeAtiva, 'pm-clone');
+      cl.style.width = W + 'px'; cl.style.height = H + 'px';
+      cl.style.opacity = '1'; cl.style.visibility = 'visible'; cl.style.filter = 'none';
+      if (limparAnim) cl.querySelectorAll(limparAnim).forEach(function(el){
+        el.style.opacity = '1'; el.style.transform = 'none'; el.style.clipPath = 'none';
+      });
+      if (cfg.prepararClone) cfg.prepararClone(cl);
+      return cl;
+    }
+    function scaleNext(){
+      var f = $('pNf'), c = f.querySelector('.pm-clone');
+      if (c) c.style.transform = 'scale(' + (f.clientWidth/W) + ')';
+    }
+    if (global.ResizeObserver) new ResizeObserver(scaleNext).observe($('pNf'));
+    function renderP(n){
+      var slides = lista(), N = slides.length;
+      var lab = function(i){ return pad(i+1) + ' · ' + rotulo(i); };
+      $('pLab').textContent = lab(n);
+      $('pIx').textContent = pad(n+1) + ' / ' + pad(N);
+      var f = $('pNf'); f.innerHTML = '';
+      if (n+1 < N) { f.appendChild(staticClone(slides[n+1])); $('pNlab').textContent = lab(n+1); scaleNext(); }
+      else { f.innerHTML = '<div class="pmx-end">' + T.end + '</div>'; $('pNlab').textContent = ''; }
+      var nb = $('pNotes'), items = notasDe(n) || [];
+      if (typeof items === 'string') items = [items];
+      if (!items.length) { nb.innerHTML = '<div class="none">' + T.noNotes + '</div>'; }
+      else {
+        var ul = document.createElement('ul');
+        items.forEach(function(t){ var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+        nb.innerHTML = ''; nb.appendChild(ul);
+      }
+      nb.scrollTop = 0;
+    }
+    renderP(atual());
+    api.redesenhar = function(){ renderP(atual()); };
+
+    /* relógio e cronômetro */
+    var t0 = Date.now(), acc = 0, running = true;
+    function elapsed(){ return acc + (running ? Date.now() - t0 : 0); }
+    function toggleTimer(){
+      if (running) { acc += Date.now() - t0; running = false; } else { t0 = Date.now(); running = true; }
+      $('pTimer').classList.toggle('paused', !running); $('pTp').textContent = running ? T.pause : T.resume;
+    }
+    $('pTp').onclick = toggleTimer;
+    $('pTr').onclick = function(){ acc = 0; t0 = Date.now(); tick(); };
+    function tick(){
+      var s = Math.floor(elapsed()/1000);
+      $('pTv').textContent = pad(Math.floor(s/3600)) + ':' + pad(Math.floor(s/60)%60) + ':' + pad(s%60);
+      var d = new Date(); $('pClock').textContent = pad(d.getHours()) + ':' + pad(d.getMinutes());
+    }
+    setInterval(tick, 500); tick();
+
+    /* status da conexão com a janela dos slides */
+    function status(){
+      var ok = Date.now() - lastPong < 4500;
+      var c = $('pCon'); c.classList.toggle('ok', ok);
+      c.querySelector('span').textContent = ok ? T.conn : T.notConn;
+      $('pOpenA').style.display = ok ? 'none' : '';
+    }
+    setInterval(function(){ send({t:'ping'}); status(); }, 1500);
+    send({t:'hello'}); setTimeout(status, 600);
+
+    /* ajuda (aparece sozinha na 1ª vez) */
+    function help(){
+      var old = document.querySelector('.pmx-tip'); if (old) { old.remove(); return; }
+      var d = document.createElement('div'); d.className = 'pmx-tip';
+      d.innerHTML = '<b>' + T.helpHead + '</b><ol><li>' + T.h1 + '</li><li>' + T.h2 + '</li><li>' + T.h3 + '</li><li>' + T.h4 + '</li></ol>' +
+        '<button id="pTipX">' + T.ok + '</button>';
+      document.body.appendChild(d);
+      $('pTipX').onclick = function(){ d.remove(); };
+    }
+    $('pHelp').onclick = help;
+    var seenTip = false; try { seenTip = localStorage.getItem(PFX + '-pm-tip') === '1'; localStorage.setItem(PFX + '-pm-tip','1'); } catch(e){}
+    if (!seenTip) help();
+
+    return api;
+  }
+
+  global.ModoApresentador = { iniciar: iniciar, textos: TEXTOS };
+})(window);
+
+</script>
 <script>
 (function(){
   "use strict";
@@ -1443,10 +1965,10 @@ html[data-idioma="en"] .slide[data-lang="pt"]{display:none !important}
      a pessoa no mesmo número de slide. */
   var TXT = {
     pt: { titulo:"SCI-AGRO · Integração",    indice:"Integração",
-          dica:"← → navegar · esc índice · f tela cheia",
+          dica:"← → navegar · esc índice · f tela cheia · p apresentador",
           ir:"Ir para o slide ", slide:"Slide ", lang:"pt-BR" },
     en: { titulo:"SCI-AGRO · Integração", indice:"Integração",
-          dica:"← → navigate · esc index · f fullscreen",
+          dica:"← → navigate · esc index · f fullscreen · p presenter",
           ir:"Go to slide ", slide:"Slide ", lang:"en" }
   };
   var BILINGUE = !!document.querySelector('.slide[data-lang="en"]');
@@ -1517,21 +2039,35 @@ html[data-idioma="en"] .slide[data-lang="pt"]{display:none !important}
     if (!BILINGUE) langBox.hidden = true;
     else langBox.addEventListener("click", function(e){
       var b = e.target.closest("button[data-l]");
-      if (!b || b.dataset.l === idioma || locked) return;
-      idioma = b.dataset.l;
-      aplicaIdioma(false);
-      marcaEndereco();
-      try {
-        var u = new URL(location.href);
-        if (idioma === "en") u.searchParams.set("idioma", "en");
-        else u.searchParams.delete("idioma");
-        history.replaceState(null, "", u.pathname + u.search + (location.hash || ""));
-      } catch (err) {}
+      if (!b || locked) return;
+      trocaIdioma(b.dataset.l, false);
     });
+  }
+  function trocaIdioma(l, remoto){
+    if (!BILINGUE || (l !== "pt" && l !== "en") || l === idioma) return;
+    idioma = l;
+    aplicaIdioma(false);
+    marcaEndereco();
+    try {
+      var u = new URL(location.href);
+      if (idioma === "en") u.searchParams.set("idioma", "en");
+      else u.searchParams.delete("idioma");
+      history.replaceState(null, "", u.pathname + u.search + (location.hash || ""));
+    } catch (err) {}
+    if (window.pm) {
+      if (!remoto) window.pm.enviar({t:"idioma", l:l});
+      window.pm.redesenhar();
+    }
+    if (typeof marcaIdiomaApresentador === "function") marcaIdiomaApresentador();
   }
 
   /* ---------- Fit the 1600x900 stage to any viewport ---------- */
   function fit(){
+    if (document.body.classList.contains("pm")) {          /* janela do apresentador: cabe na caixa */
+      var vp = stage.parentNode;
+      stage.style.setProperty("--s", Math.min(vp.clientWidth / 1600, vp.clientHeight / 900));
+      return;
+    }
     var pad = window.innerWidth < 700 ? 8 : 40;
     var s = Math.min((window.innerWidth - pad) / 1600, (window.innerHeight - pad - 40) / 900);
     stage.style.setProperty("--s", s);
@@ -1576,6 +2112,16 @@ html[data-idioma="en"] .slide[data-lang="pt"]{display:none !important}
     });
   }
 
+  /* imprimir no meio da animação não pode congelar o número pela metade */
+  window.addEventListener("beforeprint", function(){
+    document.querySelectorAll("[data-count]").forEach(function(el){
+      var alvo = parseFloat(el.getAttribute("data-count"));
+      var sep  = el.getAttribute("data-sep") || "";
+      var s = String(Math.round(alvo));
+      el.textContent = sep ? s.replace(/\B(?=(\d{3})+(?!\d))/g, sep) : s;
+    });
+  });
+
   /* ---------- Navigate ---------- */
   function go(n){
     n = Math.max(0, Math.min(slides.length - 1, n));
@@ -1597,9 +2143,20 @@ html[data-idioma="en"] .slide[data-lang="pt"]{display:none !important}
     runCounters(into);
     marcaFundo();
     marcaEndereco();
+    if (window.pm) window.pm.slideMudou(idx);               /* a outra janela acompanha */
 
     var wait = REDUCED ? 320 : (document.documentElement.dataset.perf === "lite" ? 400 : 780);
-    setTimeout(function(){ out.classList.remove("is-leaving"); locked = false; }, wait);
+    setTimeout(function(){
+      out.classList.remove("is-leaving"); locked = false;
+      if (pendente !== null) { var p = pendente; pendente = null; go(p); }
+    }, wait);
+  }
+  /* Pedido que chega da outra janela durante a transição não pode se perder:
+     fica na fila e roda assim que destravar (o go() sozinho ignoraria). */
+  var pendente = null;
+  function irPara(n){
+    if (locked) { pendente = n; return; }
+    go(n);
   }
   function nextS(){ go(idx + 1); }
   function prevS(){ go(idx - 1); }
@@ -1632,6 +2189,7 @@ html[data-idioma="en"] .slide[data-lang="pt"]{display:none !important}
   var wheelLock = false;
   window.addEventListener("wheel", function(e){
     if (wheelLock || !index.hidden || Math.abs(e.deltaY) < 12) return;
+    if (e.target.closest && e.target.closest(".pmx-side, .pmx-top, .pmx-bot, .pmx-tip")) return;
     wheelLock = true;
     (e.deltaY > 0 ? nextS : prevS)();
     hideHint();
@@ -1749,7 +2307,16 @@ html[data-idioma="en"] .slide[data-lang="pt"]{display:none !important}
   window.addEventListener("hashchange", function(){
     if (mudandoEndereco) return;
     var n = slideDoEndereco();
-    if (n) go(n - 1);
+    if (!n) return;
+    /* Durante a transição o go() ignora o pedido (locked). Como o endereço JÁ
+       mudou e replaceState não dispara hashchange, nada traria o pedido de
+       volta: a página ficava num slide diferente do que a barra de endereço
+       dizia. Insiste até destravar. */
+    (function tenta(resta){
+      if (idx + 1 === n) return;
+      if (!locked) { go(n - 1); return; }
+      if (resta > 0) setTimeout(function(){ tenta(resta - 1); }, 90);
+    })(14);
   });
 
   /* ---------- Boot ---------- */
@@ -1757,6 +2324,139 @@ html[data-idioma="en"] .slide[data-lang="pt"]{display:none !important}
   var abertura = slideDoEndereco();
   if (abertura > 1) saltaSemTransicao(abertura);
   document.fonts && document.fonts.ready.then(fit);
+
+  /* ---------- Modo apresentador ----------
+     P abre uma segunda janela com o slide atual, o próximo, as notas, o relógio
+     e o cronômetro. As duas janelas andam juntas, inclusive na troca de idioma.
+     L liga o apontador laser, B escurece a tela do público. Kit em
+     modo-apresentador.js, embutido aqui para o deck continuar sendo um arquivo só. */
+  var NOTAS = {
+ "pt": [
+  [
+   "Dar as boas-vindas ao novo colaborador",
+   "SCI-AGRO, em Charqueada/SP, fundado em 2018, do grupo GLP",
+   "Contar o roteiro: quem somos, cultura, regras, benefícios e segurança"
+  ],
+  [
+   "2018: início das atividades",
+   "Estrutura LC · GC · MS para a segurança de agrotóxicos e saneantes",
+   "Estudos físico-químicos, ecotoxicológicos, toxicológicos e de genotoxicidade"
+  ],
+  [
+   "Missão: ser referência pela qualidade e pela inovação, valorizando pessoas e comunidade",
+   "Visão: estar entre os principais players e ser referência em serviços analíticos",
+   "Valores: cliente, responsabilidade social, meio ambiente, conduta e excelência"
+  ],
+  [
+   "Três pilares: sustentabilidade, qualidade no trabalho e equipe preparada",
+   "Reforçar que os três andam juntos e sustentam o resultado técnico"
+  ],
+  [
+   "Cultura é como trabalhamos, aprendemos e colaboramos todos os dias",
+   "Clima saudável, integração entre áreas e valorização das pessoas"
+  ],
+  [
+   "Comunicação aberta: ideias, dúvidas e melhorias, com respeito",
+   "Valorização da contribuição e do aprendizado",
+   "Conflitos resolvidos com maturidade e foco na solução",
+   "Clima saudável que favorece segurança e colaboração"
+  ],
+  [
+   "Ponto eletrônico: registrar entrada, saída e intervalos",
+   "Refeitório, carga horária e banco de horas conforme as orientações",
+   "Celular com responsabilidade; uniforme e crachá sempre",
+   "Abrir para dúvidas antes de seguir"
+  ],
+  [
+   "Unimed, Uniodonto, alimentação e transporte fretado",
+   "Seguro de vida, SESC e Excellent Global (idiomas)",
+   "Wellhub para bem-estar e ZenKlub para saúde emocional"
+  ],
+  [
+   "Projeto AVANTE: acompanhamento do desenvolvimento de cada colaborador",
+   "Cultivando Conhecimento: bolsa de estudos para a formação",
+   "Resultado esperado: profissionais mais preparados e engajados"
+  ],
+  [
+   "1º toque: manter a calma e aguardar",
+   "2º toque: evacuar com calma, seguindo os brigadistas",
+   "Não passar por dentro dos prédios durante a evacuação"
+  ],
+  [
+   "Apresentar a nova equipe de brigadistas",
+   "Manter a calma, seguir o fluxo e procurar os brigadistas",
+   "Encerrar com as boas-vindas e abrir para perguntas"
+  ]
+ ]
+};
+  var PM_TXT = {
+    pt: { laser:"Apontador laser (L)", pres:"Modo apresentador (P)", prefixo:"Apresentador" },
+    en: { laser:"Laser pointer (L)",   pres:"Presenter mode (P)",   prefixo:"Presenter" }
+  };
+  function marcaIdiomaApresentador(){
+    var t = PM_TXT[idioma] || PM_TXT.pt;
+    var bl = document.getElementById("pmBLaser"), bp = document.getElementById("pmBPres");
+    if (bl) { bl.title = t.laser; bl.setAttribute("aria-label", t.laser); }
+    if (bp) { bp.title = t.pres;  bp.setAttribute("aria-label", t.pres); }
+    if (document.body.classList.contains("pm")) {
+      document.title = t.prefixo + " · " + TXT[idioma].titulo;
+      document.querySelectorAll(".pmx-langs button").forEach(function(b){
+        b.classList.toggle("on", b.dataset.pl === idioma);
+      });
+      var tt = document.querySelector(".pmx-ttl b"); if (tt) tt.textContent = TXT[idioma].indice;
+    }
+  }
+  if (window.ModoApresentador) {
+    window.pm = ModoApresentador.iniciar({
+      palco: stage,
+      slides: function(){ return slides; },
+      largura: 1600, altura: 900,
+      irPara: irPara,
+      atual: function(){ return idx; },
+      ajustar: fit,
+      classeAtiva: "is-active",
+      limparAnimacoes: ".anim,.anim--card,.anim--pill,.anim--rule,.anim--photo,.tsplit > span,[data-par]",
+      prepararClone: function(cl){
+        cl.classList.remove("is-leaving");
+        cl.querySelectorAll("[data-count]").forEach(function(el){      /* número final, não o da animação */
+          var alvo = parseFloat(el.getAttribute("data-count")), sep = el.getAttribute("data-sep") || "";
+          var s = String(Math.round(alvo));
+          el.textContent = sep ? s.replace(/\B(?=(\d{3})+(?!\d))/g, sep) : s;
+        });
+      },
+      visaoGeral: toggleIndex,
+      telaCheia: function(){
+        if (document.fullscreenElement) document.exitFullscreen();
+        else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+      },
+      titulo: TXT[idioma].indice,
+      prefixo: "sci-integracao",
+      notas: function(i){ var l = NOTAS[idioma] || NOTAS.pt; return l[i] || []; },
+      aoConectar: function(){ if (BILINGUE && window.pm) window.pm.enviar({t:"idioma", l:idioma}); },
+      aoMensagem: function(m){ if (m.t === "idioma") trocaIdioma(m.l, true); }
+    });
+    var bL = document.getElementById("pmBLaser"), bP = document.getElementById("pmBPres");
+    if (bL) bL.addEventListener("click", function(){ window.pm.laser(); });
+    if (bP) bP.addEventListener("click", function(){ window.pm.abrirApresentador(); });
+    if (window.pm.ehApresentador && BILINGUE) {
+      var bot = document.querySelector(".pmx-bot"), sp = bot && bot.querySelector(".sp");
+      if (bot) {
+        var g = document.createElement("span"); g.className = "pmx-langs";
+        g.innerHTML = '<button type="button" data-pl="pt" title="Português">PT</button>' +
+                      '<button type="button" data-pl="en" title="English">EN</button>';
+        g.addEventListener("click", function(e){
+          var b = e.target.closest("button[data-pl]"); if (b) trocaIdioma(b.dataset.pl, false);
+        });
+        bot.insertBefore(g, sp || null);
+      }
+    }
+    /* O abre a visão geral (o botão "Visão geral" já mostra a tecla) */
+    if (window.pm.ehApresentador) document.addEventListener("keydown", function(e){
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key === "o" || e.key === "O") { e.preventDefault(); toggleIndex(); }
+    });
+    marcaIdiomaApresentador();
+  }
 })();
 </script>
 
